@@ -7,6 +7,8 @@ class QuizApp extends StatefulWidget {
 }
 
 class _QuizAppState extends State<QuizApp> {
+  int _currentQuestionIndex = 0;
+
   List questionBank = [
     Question(
         questionText:
@@ -69,7 +71,7 @@ class _QuizAppState extends State<QuizApp> {
                     child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    questionBank[4].questionText,
+                    questionBank[_currentQuestionIndex].questionText,
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.white, fontSize: 17),
                   ),
@@ -81,7 +83,7 @@ class _QuizAppState extends State<QuizApp> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    return _checkAnswer();
+                    return _checkAnswer(true);
                   },
                   child: Text(
                     'TRUE',
@@ -94,7 +96,7 @@ class _QuizAppState extends State<QuizApp> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    return _checkAnswer();
+                    return _checkAnswer(false);
                   },
                   child: Text(
                     'FALSE',
@@ -107,7 +109,7 @@ class _QuizAppState extends State<QuizApp> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    return _checkAnswer();
+                    return _nextQuestion();
                   },
                   child: Icon(
                     Icons.arrow_forward,
@@ -127,5 +129,17 @@ class _QuizAppState extends State<QuizApp> {
     );
   }
 
-  Widget _checkAnswer() {}
+  _checkAnswer(bool userChoice) {
+    if (userChoice == questionBank[_currentQuestionIndex].isCorrect) {
+      print('YES CORRECT');
+    } else {
+      print('INCORRECT');
+    }
+  }
+
+  _nextQuestion() {
+    setState(() {
+      _currentQuestionIndex = (_currentQuestionIndex + 1) % questionBank.length;
+    });
+  }
 }
