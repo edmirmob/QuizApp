@@ -57,9 +57,68 @@ class _QuizAppState extends State<QuizApp> {
                 height: 180,
               ),
             ),
-            Container(
-              height: 120,
-              child: Text(questionBank[4].questionText),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(14.4),
+                    border: Border.all(color: Colors.blueGrey.shade400)),
+                height: 120,
+                child: Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    questionBank[4].questionText,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white, fontSize: 17),
+                  ),
+                )),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    return _checkAnswer();
+                  },
+                  child: Text(
+                    'TRUE',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.blueGrey.shade900),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    return _checkAnswer();
+                  },
+                  child: Text(
+                    'FALSE',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.blueGrey.shade900),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    return _checkAnswer();
+                  },
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.blueGrey.shade900),
+                  ),
+                ),
+              ],
             ),
             Spacer()
           ],
@@ -67,4 +126,6 @@ class _QuizAppState extends State<QuizApp> {
       ),
     );
   }
+
+  Widget _checkAnswer() {}
 }
