@@ -47,93 +47,109 @@ class _QuizAppState extends State<QuizApp> {
         backgroundColor: Colors.blueGrey,
       ),
       backgroundColor: Colors.blueGrey,
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Image.asset(
-                'assets/images/flag.png',
-                fit: BoxFit.cover,
-                width: 250,
-                height: 180,
+      body: Builder(builder: (context) {
+        return Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Image.asset(
+                  'assets/images/flag.png',
+                  fit: BoxFit.cover,
+                  width: 250,
+                  height: 180,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(14.4),
-                    border: Border.all(color: Colors.blueGrey.shade400)),
-                height: 120,
-                child: Center(
-                    child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    questionBank[_currentQuestionIndex].questionText,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white, fontSize: 17),
-                  ),
-                )),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(14.4),
+                      border: Border.all(color: Colors.blueGrey.shade400)),
+                  height: 120,
+                  child: Center(
+                      child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      questionBank[_currentQuestionIndex].questionText,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontSize: 17),
+                    ),
+                  )),
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    return _checkAnswer(true);
-                  },
-                  child: Text(
-                    'TRUE',
-                    style: TextStyle(color: Colors.white),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      return _checkAnswer(true, context);
+                    },
+                    child: Text(
+                      'TRUE',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blueGrey.shade900),
+                    ),
                   ),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.blueGrey.shade900),
+                  ElevatedButton(
+                    onPressed: () {
+                      return _checkAnswer(false, context);
+                    },
+                    child: Text(
+                      'FALSE',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blueGrey.shade900),
+                    ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    return _checkAnswer(false);
-                  },
-                  child: Text(
-                    'FALSE',
-                    style: TextStyle(color: Colors.white),
+                  ElevatedButton(
+                    onPressed: () {
+                      return _nextQuestion();
+                    },
+                    child: Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blueGrey.shade900),
+                    ),
                   ),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.blueGrey.shade900),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    return _nextQuestion();
-                  },
-                  child: Icon(
-                    Icons.arrow_forward,
-                    color: Colors.white,
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.blueGrey.shade900),
-                  ),
-                ),
-              ],
-            ),
-            Spacer()
-          ],
-        ),
-      ),
+                ],
+              ),
+              Spacer()
+            ],
+          ),
+        );
+      }),
     );
   }
 
-  _checkAnswer(bool userChoice) {
+  _checkAnswer(bool userChoice, BuildContext context) {
     if (userChoice == questionBank[_currentQuestionIndex].isCorrect) {
-      print('YES CORRECT');
+      final snack = SnackBar(
+        duration: Duration(milliseconds: 500),
+          content: Text(
+        'Correct answer',
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.green),
+      ));
+      ScaffoldMessenger.of(context).showSnackBar(snack);
     } else {
-      print('INCORRECT');
+      final snack = SnackBar(
+        duration: Duration(milliseconds: 500),
+          content: Text(
+        'Incorrect answer',
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.red),
+      ));
+      ScaffoldMessenger.of(context).showSnackBar(snack);
     }
   }
 
