@@ -8,8 +8,25 @@ class QuizApp extends StatefulWidget {
 class _QuizAppState extends State<QuizApp> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('True Citizen'),
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey,
+      ),
+      backgroundColor: Colors.blueGrey,
+      body: Container(
+        child: Column(
+          children: [
+            Image.asset(
+              'assets/images/flag.png',
+              fit: BoxFit.cover,
+              width: 250,
+              height: 150,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
