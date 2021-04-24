@@ -84,6 +84,19 @@ class _QuizAppState extends State<QuizApp> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
+                      return _previousQuestion();
+                    },
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blueGrey.shade900),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
                       return _checkAnswer(true, context);
                     },
                     child: Text(
@@ -134,28 +147,40 @@ class _QuizAppState extends State<QuizApp> {
   _checkAnswer(bool userChoice, BuildContext context) {
     if (userChoice == questionBank[_currentQuestionIndex].isCorrect) {
       final snack = SnackBar(
-        duration: Duration(milliseconds: 500),
+          duration: Duration(milliseconds: 500),
           content: Text(
-        'Correct answer',
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.green),
-      ));
+            'Correct answer',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.green),
+          ));
       ScaffoldMessenger.of(context).showSnackBar(snack);
+      _updateQuestion();
     } else {
       final snack = SnackBar(
-        duration: Duration(milliseconds: 500),
+          duration: Duration(milliseconds: 500),
           content: Text(
-        'Incorrect answer',
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.red),
-      ));
+            'Incorrect answer',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.red),
+          ));
       ScaffoldMessenger.of(context).showSnackBar(snack);
+      _updateQuestion();
     }
   }
 
-  _nextQuestion() {
+  _updateQuestion() {
     setState(() {
       _currentQuestionIndex = (_currentQuestionIndex + 1) % questionBank.length;
+    });
+  }
+
+  _nextQuestion() {
+    _updateQuestion();
+  }
+
+  _previousQuestion() {
+    setState(() {
+      _currentQuestionIndex = (_currentQuestionIndex - 1) % questionBank.length;
     });
   }
 }
